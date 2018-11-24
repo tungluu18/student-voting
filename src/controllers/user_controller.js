@@ -1,4 +1,5 @@
 const User = require('../models/user_model')
+const Proposal = require('../models/proposal_model')
 
 const secure = require('../models/secure')
 
@@ -26,13 +27,13 @@ exports.authenticate = async function(req, res) {
 }
 
 exports.create = async function(req, res) {
-  let {username, password} = req.body
+  let {username, password, displayname} = req.body
   if (!username || !password) {
     sendResponse(res, 404, {Error: 'Invalid username and password'})
     return 
   }
   
-  const user = new User({username: username, password: secure.encrypt(password)})
+  const user = new User({username: username, password: secure.encrypt(password), displayname: displayname})
   try {
     const check_user = await User.findOne({username})
     if (check_user != null) 
@@ -41,6 +42,17 @@ exports.create = async function(req, res) {
       const new_user = await user.save()
       sendResponse(res, 200, {user_id: new_user._id})  
     }     
+  } catch (error) {
+    console.log(error)
+    sendResponse(res, 404, {Error: error.message})
+  }
+}
+
+exports.update = async function(req, res) {
+  const user_id = secure.decode(req.headers['token'])
+  try {
+    await User.findByIdAndUpdate(user_id, req.body)
+    sendResponse(res, 200, {})
   } catch (error) {
     console.log(error)
     sendResponse(res, 404, {Error: error.message})

@@ -13,10 +13,10 @@ db.on('error', console.error.bind(console, 'MongoDB connection error: '))
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())  
 
-// static folder for image
+// static folder for images
 app.use(express.static('resources/images'))  
 
-// setting CORS
+// CORS stuffs
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With,Authorization');
@@ -24,12 +24,17 @@ app.use((req, res, next) => {
   next()
 })
 
-// set up routing file
+/** set up routing file */
+
 const UserRouter = require('./routes/user_route')
 app.use('/user', UserRouter)
+
+const ProposalRouter = require('./routes/proposal_route')
+app.use('/proposal', ProposalRouter)
 
 // listen on port
 const port = 12345
 app.listen(port, () => { 
-})
   console.log(`Server is listening on port ${port}...`)
+})
+  
