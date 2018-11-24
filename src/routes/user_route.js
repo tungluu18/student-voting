@@ -10,7 +10,7 @@ router.get('/auth', user_controller.authenticate)  // GET /auth?username=&passwo
 // register new account: username and password
 router.post('/reg', user_controller.create)
 
-/** send with user's token in header */ 
+/** send with user's token in header */
 
 // update profile: displayname, email, ... 
 router.put('/', secure.verify, user_controller.update)

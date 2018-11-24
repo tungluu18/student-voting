@@ -15,4 +15,7 @@ router.post('/:proposal_id/debate', secure.verify, proposal_controller.debate_pr
 // return a proposal
 router.get('/:proposal_id', proposal_controller.get_proposal)
 
+// upvote for a debate
+router.post('/:proposal_id/debate/:debate_id/upvote', secure.verify, proposal_controller.upvote)
+
 module.exports = router

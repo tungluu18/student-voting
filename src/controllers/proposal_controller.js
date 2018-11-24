@@ -54,3 +54,37 @@ exports.get_proposal = async function(req, res) {
     sendResponse(res, 404, {Error: error.message})
   }
 }
+
+exports.upvote = async function(req, res) {
+  const {proposal_id, debate_id} = req.params
+  const user_id = secure.decode(req.headers['token'])
+
+  try {
+    // find the proposal by id
+    let proposal = await Proposal.findById(proposal_id)
+    if (!proposal) throw new Error('Invalid proposal')
+
+    // find the dabate on that proposal by id
+    let debates = proposal.debates    
+    let debate = debates.find(x => x._id == debate_id)
+    if (debate == null) throw new Error('Invalid debate')
+    
+    // check the list of upvoter on the debate    
+    if (debate.upvoter_id.find(x => x == user_id) != null) 
+      throw new Error('User can upvote only once on each debate')
+
+    for (var _debate of proposal.debates) {      
+      if (_debate._id == debate_id) {        
+        // append this user to the list of upvoter
+        _debate.upvoter_id.push(user_id)
+        break
+      }
+    }         
+            
+    await Proposal.findByIdAndUpdate({_id: proposal_id}, {debates})
+    sendResponse(res, 200, {})
+  } catch (error) {
+    console.log(error)
+    sendResponse(res, 404, {Error: error.message})
+  }  
+}
