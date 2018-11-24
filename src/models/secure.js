@@ -1,6 +1,6 @@
 // jsonwebtoken
 const jwt = require('jsonwebtoken')
-const token_expiration = 3600
+const token_expiration = 36000
 const secret_code = 'InfinitoPhoenix'
 
 // encrypt the password
@@ -24,10 +24,10 @@ exports.create_token = function(user_id) {
 }
 
 exports.verify = function(req, res, next) {
-  const token = req.headers['token']
-  if (!token) throw new Error('Forbidden bro')
-  jwt.verify(token, secret_code, (err, auth_data) => {
-    if (err) {
+  const token = req.headers['token']  
+  if (!token) throw new Error('Forbidden')
+  jwt.verify(token, secret_code, (err, auth_data) => {    
+    if (err) {      
       res.sendStatus(403)
       return
     }
