@@ -9,7 +9,7 @@ let UserSchema = new Schema({
   password: {
     type: String,
     required: true
-  },
+  },  
   displayname: String,
   email: String
 })

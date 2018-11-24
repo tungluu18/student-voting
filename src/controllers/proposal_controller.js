@@ -71,10 +71,21 @@ exports.get = async function(req, res) {
   }
 }
 
+exports.getByPublisherId = async function(req, res) {
+  const {publisher_id} = secure.decode(req.headers['token'])
+  try {
+    const proposals = await Proposal.find({publisher_id})
+    sendResponse(res, 200, proposals)
+  } catch (error) {
+    console.log(error)
+    sendResponse(res, 404, {Error: error.message})
+  }
+}
+
 exports.getAll = async function(req, res) {
   try {
     const proposals = await Proposal.find()
-    sendResponse(res, 200, {proposals})
+    sendResponse(res, 200, proposals)
   } catch (error) {
     console.log(error)
     sendResponse(res, 404, {Error: error.message})

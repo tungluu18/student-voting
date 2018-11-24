@@ -12,7 +12,7 @@ router.get('/', proposal_controller.getAll)
 // return a proposal
 router.get('/:proposal_id', proposal_controller.get)
 
-// post a new proposal
+// post a new proposal: content
 router.post('/', secure.verify, proposal_controller.post)
 
 // debate on a proposal: vote and comment
@@ -27,6 +27,7 @@ router.delete('/:proposal_id', secure.verify, proposal_controller.delete)
 // upvote for a debate
 router.put('/:proposal_id/debate/:debate_id/upvote', secure.verify, proposal_controller.upvote)
 
+// downvote for a debate
 router.put('/:proposal_id/debate/:debate_id/downvote', secure.verify, proposal_controller.downvote)
 
 module.exports = router
