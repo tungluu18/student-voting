@@ -15,4 +15,11 @@ router.post('/reg', user_controller.create)
 // update profile: displayname, email, ... 
 router.put('/', secure.verify, user_controller.update)
 
+// classify user credit_score
+router.get('/test/:address', user_controller.getBalance)
+router.post('/test_set/:address/:amount', (req,res) => {
+  user_controller.set_token(req.params.address, req.params.amount)
+})
+router.get('/getBalance', user_controller.getBalance)
+// router.post('/minusToken', user_controller.minusToken)
 module.exports = router

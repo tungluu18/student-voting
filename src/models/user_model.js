@@ -9,9 +9,11 @@ let UserSchema = new Schema({
   password: {
     type: String,
     required: true
-  },  
+  },
   displayname: String,
-  email: String
+  email: String,
+  address: String,
+  key: String
 })
 
 module.exports = mongoose.model('User', UserSchema)

@@ -23,8 +23,8 @@ exports.create_token = function(user_id) {
   })
 }
 
-exports.verify = function(req, res, next) {
-  const token = req.headers['token']  
+exports.verify = function(req, res, next) {  
+  const token = req.headers['authorization']
   if (!token) throw new Error('Forbidden')
   jwt.verify(token, secret_code, (err, auth_data) => {    
     if (err) {      

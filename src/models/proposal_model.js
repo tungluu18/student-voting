@@ -17,11 +17,25 @@ const ProposalSchema = new Schema({
     type: String,
     maxlength: 1000
   },
+  title: {
+    type: String,
+    maxlength: 100
+  },
   publisher_id: {
     type: String,
     maxlength: 50
   },
-  debates: [DebateSchema]
+  debates: [DebateSchema],
+  upload_time: {
+    type: Date,
+    default: Date.now
+  },
+  exposed_token: Number,
+  expire_time: Date,
+  status: {
+    type: String,
+    default: 'Voting'
+  }
 })
 
 module.exports = mongoose.model('Proposal', ProposalSchema)

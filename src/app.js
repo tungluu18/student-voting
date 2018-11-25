@@ -26,6 +26,10 @@ app.use((req, res, next) => {
 
 /** set up routing file */
 
+app.get('/phoenix', (req,res) => {
+  res.send('hello bro <3')
+})
+
 const UserRouter = require('./routes/user_route')
 app.use('/user', UserRouter)
 
